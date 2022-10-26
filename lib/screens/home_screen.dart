@@ -12,7 +12,7 @@ class HomeScreen extends ConsumerWidget {
       body: Center(
         child: Text(ref.watch(userProvider)!.email +
             ' uid :' +
-            ref.watch(userProvider)!.uid +
+            ref.watch(userProvider)!.token +
             ' end'),
       ),
     );

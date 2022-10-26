@@ -11,7 +11,7 @@ class LoginScreen extends ConsumerWidget {
     final errorModel =
         await ref.read(authRepositoryProvider).signInWithGoogle();
     print("errorModel.data ${errorModel.data}");
-    print("errorModel.data ${errorModel.error}");
+    print("errorModel.error ${errorModel.error}");
     final sMessanger = ScaffoldMessenger.of(ctx);
     final navigator = Navigator.of(ctx);
     print('try logiin');
@@ -21,6 +21,7 @@ class LoginScreen extends ConsumerWidget {
       navigator
           .push(MaterialPageRoute(builder: (context) => const HomeScreen()));
     } else {
+      print('errror in logiin');
       sMessanger
           .showSnackBar(SnackBar(content: Text(errorModel.error.toString())));
     }

@@ -53,11 +53,14 @@ class AuthRepository {
           },
         );
         print(res.statusCode);
+        // print(res);
         print('object3');
         switch (res.statusCode) {
           case 200:
-            final newUser =
-                userAcc.copyWith(uid: jsonDecode(res.body)['user']['_id']);
+            final newUser = userAcc.copyWith(
+              uid: jsonDecode(res.body)['user']['_id'],
+              token: jsonDecode(res.body)['token'],
+            );
             error = ErrorModel(error: null, data: newUser);
             print("new user${jsonDecode(res.body)['user']}");
             break;

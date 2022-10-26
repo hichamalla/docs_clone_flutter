@@ -1,6 +1,6 @@
 const express = require('express');
 const User = require('../models/user');
-
+var jwt = require('jsonwebtoken');
 const authRouter = express.Router()
 
 authRouter.post('/api/signup', async (req, res) => {
@@ -15,10 +15,16 @@ authRouter.post('/api/signup', async (req, res) => {
             })
             console.log("user1", user)
             user = await user.save()
-            console.log("user2", user)
-            res.status(200).json({ user })
-        }else
-        return   res.status(200).json({ user })
+          
+          
+            console.log(token)
+           
+        } 
+            const token = jwt.sign({ id: user._id }, 'passwordKey')
+            const verified = jwt.verify(token, "passwordKey");
+            console.log("user2", { user, token ,verified})
+            return res.status(200).json({ user, token })
+        
     } catch (e) {
 
         console.log('eerrrr', e)
