@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:docs_clone_flutter/colors.dart';
 import 'package:docs_clone_flutter/repository/auth_repository.dart';
 import 'package:docs_clone_flutter/screens/home_screen.dart';

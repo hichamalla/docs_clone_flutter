@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('../models/user');
 var jwt = require('jsonwebtoken');
+const auth = require('../middlewares/auth');
 const authRouter = express.Router()
 
 authRouter.post('/api/signup', async (req, res) => {
@@ -17,7 +18,7 @@ authRouter.post('/api/signup', async (req, res) => {
             user = await user.save()
           
           
-            console.log(token)
+            // console.log(token)
            
         } 
             const token = jwt.sign({ id: user._id }, 'passwordKey')
@@ -31,5 +32,19 @@ authRouter.post('/api/signup', async (req, res) => {
         res.status(500).json({ error: e.message })
     }
 })
-
+authRouter.get('/api/getuser',auth,async(req,res) =>{
+    const user=await User.findById(req.user)
+    console.log('userx',user)
+    res.json({user,token:req.token})
+//     try{ 
+//         console.log(req.header('token'),"kkkkk")
+//         console.log('id',jwt.verify(req.header('token'), "passwordKey")['id'])
+//         let id=jwt.verify(req.header('token'), "passwordKey")['id']
+//         const user=await User.findById(id)
+//         console.log('userx',user)
+//         res.json({user,token:req.token})
+//     }catch(e){
+// console.log(e,'eeee')
+//     }
+})
 module.exports = authRouter
