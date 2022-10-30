@@ -36,15 +36,6 @@ authRouter.get('/api/getuser',auth,async(req,res) =>{
     const user=await User.findById(req.user)
     console.log('userx',user)
     res.json({user,token:req.token})
-//     try{ 
-//         console.log(req.header('token'),"kkkkk")
-//         console.log('id',jwt.verify(req.header('token'), "passwordKey")['id'])
-//         let id=jwt.verify(req.header('token'), "passwordKey")['id']
-//         const user=await User.findById(id)
-//         console.log('userx',user)
-//         res.json({user,token:req.token})
-//     }catch(e){
-// console.log(e,'eeee')
-//     }
+
 })
 module.exports = authRouter

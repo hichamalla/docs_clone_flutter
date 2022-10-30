@@ -38,10 +38,10 @@ class AuthRepository {
     );
     try {
       final user = await _googleSignIn.signIn();
-      print("user $user");
+      // print("user $user");
 
       if (user != null) {
-        print('object1');
+        // print('object1');
         final userAcc = UserModel(
           email: user.email,
           name: user.displayName ?? "",
@@ -58,9 +58,9 @@ class AuthRepository {
             'Content-Type': 'application/json; charset=UTF-8',
           },
         );
-        print(res.statusCode);
+        // print(res.statusCode);
         // print(res);
-        print('object3');
+        // print('object3');
         switch (res.statusCode) {
           case 200:
             final newUser = userAcc.copyWith(
@@ -71,15 +71,15 @@ class AuthRepository {
             _localDataRepository.setToken(newUser.token);
             error = ErrorModel(error: null, data: newUser);
 
-            print("new user${jsonDecode(res.body)['user']}");
+            // print("new user${jsonDecode(res.body)['user']}");
             break;
           // default:vcxxxxxx
           // throw 'Some Error'
         }
       }
-      print("already log $user");
+      // print("already log $user");
     } catch (e) {
-      print('err');
+      // print('err');
       error = ErrorModel(error: e.toString(), data: null);
     }
     return error;
@@ -88,30 +88,30 @@ class AuthRepository {
   Future<ErrorModel> getUserData() async {
     ErrorModel dataModel = ErrorModel(error: 'Some UNexpected err', data: null);
     String? token = await _localDataRepository.getToken();
-    print("token$token");
-     if(token!=null)
-     {
-    try {
-      print("token2");
-     var res = await _client.get(Uri.parse("$host/api/getuser"), headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-        'token': token 
-      });
-      print("res${res.body}");
-      if (res.statusCode == 200) {
-            print("tokenxx${jsonEncode(jsonDecode(res.body)['user'])}");
-        final newUSER =
-            UserModel.fromJson(jsonEncode(jsonDecode(res.body)['user']))
-                .copyWith(
-          token: token,
-        )
-        ;
-    print(newUSER.toMap());
-        dataModel = ErrorModel(error: null, data: newUSER);
+    // print("token$token");
+    if (token != null) {
+      try {
+        // print("token2");
+        var res = await _client.get(Uri.parse("$host/api/getuser"), headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'token': token
+        });
+        // print("res${res.body}");
+        if (res.statusCode == 200) {
+          // print("tokenxx${jsonEncode(jsonDecode(res.body)['user'])}");
+          final newUSER =
+              UserModel.fromJson(jsonEncode(jsonDecode(res.body)['user']))
+                  .copyWith(
+            token: token,
+          );
+          // print(newUSER.toMap());
+          dataModel = ErrorModel(error: null, data: newUSER);
+        }
+      } catch (e) {
+        // print(e);
+        dataModel = ErrorModel(error: e.toString(), data: null);
       }
-    } catch (e) {
-      print(e);
-    }}
+    }
     return dataModel;
   }
 }
