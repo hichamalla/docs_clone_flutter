@@ -30,4 +30,28 @@ documentRouter.get('/documents/list', auth, async (req, res) => {
         res.status(500).json({ error: e.message });
     }
 })
+
+documentRouter.post('/documents/updateTitle', auth, async (req, res) => {
+    console.log('failed')
+    try {
+        const { id, title } = req.body;
+        let documents = await Document.findByIdAndUpdate(id, { title });
+
+        res.json({ 'docupdated': documents });
+    } catch (error) {
+        console.log("eer")
+        res.status(500).json({ error: e.message });
+    }
+})
+
+documentRouter.get('/documents/:id', auth, async (req, res) => {
+    console.log('failed')
+    try {
+        let documents = await Document.findById(req.params.id);
+        res.json(documents);
+    } catch (error) {
+        console.log("eer")
+        res.status(500).json({ error: e.message });
+    }
+})
 module.exports = documentRouter

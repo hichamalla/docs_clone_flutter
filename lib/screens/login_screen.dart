@@ -5,6 +5,7 @@ import 'package:docs_clone_flutter/repository/auth_repository.dart';
 import 'package:docs_clone_flutter/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:routemaster/routemaster.dart';
 
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});
@@ -15,13 +16,13 @@ class LoginScreen extends ConsumerWidget {
     print("errorModel.data ${errorModel.data}");
     print("errorModel.error ${errorModel.error}");
     final sMessanger = ScaffoldMessenger.of(ctx);
-    final navigator = Navigator.of(ctx);
+    final navigator = Routemaster.of(ctx);
     print('try logiin');
     if (errorModel.error == null) {
       print('logiin');
       ref.read(userProvider.notifier).update((state) => errorModel.data);
       navigator
-          .push(MaterialPageRoute(builder: (context) => const HomeScreen()));
+          .push('/');
     } else {
       print('errror in logiin');
       sMessanger

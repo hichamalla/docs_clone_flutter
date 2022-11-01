@@ -8,7 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 
 final documentRepositoryProvider = Provider((ref) => DocumentsRepository());
-
+// final docProvider = StateProvider<DocumentModel?>((ref) => null);
 class DocumentsRepository {
   Future<ErrorModel> documentList(String token) async {
     ErrorModel errorModel = ErrorModel(error: 'UN expected ERR', data: null);
@@ -23,8 +23,7 @@ class DocumentsRepository {
       List rawDowc = jsonDecode(res.body);
 
       rawDowc.forEach((element) {
-        print(
-            element.runtimeType);
+        // print(element.runtimeType);
         docs.add(DocumentModel.fromJson(jsonEncode(element)));
       });
       print('hh r' + docs[0].title);
@@ -54,5 +53,51 @@ class DocumentsRepository {
     }
     print('${errorModel.error} hii');
     return errorModel;
+  }
+
+  Future<ErrorModel> updateTitle({
+    required String token,
+    required String id,
+    required String title,
+  }) async {
+    ErrorModel dataModel = ErrorModel(error: 'UNexpeted err', data: null);
+    try {
+      var res = await http.post(Uri.parse('$host/documents/updateTitle'),
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'token': token,
+          },
+          body: jsonEncode({
+            'title': title,
+            'id': id,
+          }));
+      dataModel = ErrorModel(
+        error: null,
+        data: DocumentModel.fromJson(res.body),
+      );
+    } catch (error) {}
+    return dataModel;
+  }
+
+  Future<ErrorModel> getDocumentById({
+    required String token,
+    required String id,
+  }) async {
+    ErrorModel dataModel = ErrorModel(error: 'UNexpeted err', data: null);
+    try {
+      var res = await http.get(
+        Uri.parse('$host/documents/$id'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'token': token,
+        },
+      );
+      dataModel = ErrorModel(
+        error: null,
+        data: DocumentModel.fromJson(res.body),
+      );
+      print(res.body);
+    } catch (error) {}
+    return dataModel;
   }
 }

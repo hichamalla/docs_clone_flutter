@@ -85,6 +85,11 @@ class AuthRepository {
     return error;
   }
 
+  void signOut() async{
+      await _googleSignIn.signOut();
+    _localDataRepository.setToken('');
+  }
+
   Future<ErrorModel> getUserData() async {
     ErrorModel dataModel = ErrorModel(error: 'Some UNexpected err', data: null);
     String? token = await _localDataRepository.getToken();
