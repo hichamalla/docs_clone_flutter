@@ -32,7 +32,7 @@ documentRouter.get('/documents/list', auth, async (req, res) => {
 })
 
 documentRouter.post('/documents/updateTitle', auth, async (req, res) => {
-    console.log('failed')
+    // console.log('failed')
     try {
         const { id, title } = req.body;
         let documents = await Document.findByIdAndUpdate(id, { title });
@@ -45,12 +45,12 @@ documentRouter.post('/documents/updateTitle', auth, async (req, res) => {
 })
 
 documentRouter.get('/documents/:id', auth, async (req, res) => {
-    console.log('failed')
+    // console.log('failed')
     try {
         let documents = await Document.findById(req.params.id);
         res.json(documents);
     } catch (error) {
-        console.log("eer")
+        // console.log("eer")
         res.status(500).json({ error: e.message });
     }
 })

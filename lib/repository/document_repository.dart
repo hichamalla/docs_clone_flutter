@@ -13,7 +13,7 @@ class DocumentsRepository {
   Future<ErrorModel> documentList(String token) async {
     ErrorModel errorModel = ErrorModel(error: 'UN expected ERR', data: null);
     List<DocumentModel> docs = [];
-    print('message');
+    // print('message');
     try {
       var res = await http.get(Uri.parse('$host/documents/list'), headers: {
         'Content-Type': 'application/json; charset=UTF-8',
@@ -26,7 +26,7 @@ class DocumentsRepository {
         // print(element.runtimeType);
         docs.add(DocumentModel.fromJson(jsonEncode(element)));
       });
-      print('hh r' + docs[0].title);
+      // print('hh r' + docs[0].title);
       errorModel = ErrorModel(error: null, data: docs);
     } catch (e) {}
     return errorModel;
@@ -43,7 +43,7 @@ class DocumentsRepository {
           'token': token,
         },
       );
-      print(res.body);
+      // print(res.body);
       errorModel = ErrorModel(
         error: null,
         data: DocumentModel.fromJson(res.body),
@@ -51,7 +51,7 @@ class DocumentsRepository {
     } catch (e) {
       errorModel = ErrorModel(error: e.toString(), data: null);
     }
-    print('${errorModel.error} hii');
+    // print('${errorModel.error} hii');
     return errorModel;
   }
 
@@ -96,7 +96,7 @@ class DocumentsRepository {
         error: null,
         data: DocumentModel.fromJson(res.body),
       );
-      print(res.body);
+      // print(res.body);
     } catch (error) {}
     return dataModel;
   }

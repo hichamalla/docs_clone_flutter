@@ -43,7 +43,7 @@ dependencies:
   routemaster: ^1.0.1
   riverpod_annotation: ^1.0.6
   flutter_quill: ^6.1.1
-  socket_io_client: ^2.0.0
+  socket_io_client: ^1.0.2
 
 dev_dependencies:
   flutter_test:

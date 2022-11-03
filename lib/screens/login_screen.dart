@@ -13,18 +13,18 @@ class LoginScreen extends ConsumerWidget {
   void singInWithGoogle(WidgetRef ref, ctx) async {
     final errorModel =
         await ref.read(authRepositoryProvider).signInWithGoogle();
-    print("errorModel.data ${errorModel.data}");
-    print("errorModel.error ${errorModel.error}");
+    // print("errorModel.data ${errorModel.data}");
+    // print("errorModel.error ${errorModel.error}");
     final sMessanger = ScaffoldMessenger.of(ctx);
     final navigator = Routemaster.of(ctx);
-    print('try logiin');
+    // print('try logiin');
     if (errorModel.error == null) {
-      print('logiin');
+      // print('logiin');
       ref.read(userProvider.notifier).update((state) => errorModel.data);
       navigator
           .push('/');
     } else {
-      print('errror in logiin');
+      // print('errror in logiin');
       sMessanger
           .showSnackBar(SnackBar(content: Text(errorModel.error.toString())));
     }
